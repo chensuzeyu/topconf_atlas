@@ -1,0 +1,20 @@
+{
+  "source_url": "https://blog.iclr.cc/2026/04/23/announcing-the-iclr-2026-outstanding-papers/",
+  "retrieved_at": "2026-10-09T14:23:05+00:00",
+  "retrieval_method": "official website extraction via web browsing",
+  "papers": [
+    {
+      "title": "Transformers are Inherently Succinct",
+      "label": "Outstanding Paper"
+    },
+    {
+      "title": "LLMs Get Lost In Multi-Turn Conversation",
+      "label": "Outstanding Paper"
+    },
+    {
+      "title": "The Polar Express: Optimal Matrix Sign Methods and their Application to the Muon Algorithm",
+      "label": "Honorable Mention"
+    }
+  ],
+  "note": "Bibliographic award facts extracted from the official announcement; not a copy of the article."
+}

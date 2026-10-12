@@ -1,0 +1,44 @@
+{
+  "source_url": "https://blog.icml.cc/2026/07/05/announcing-the-icml-2026-awards/",
+  "retrieved_at": "2026-10-09T14:23:05+00:00",
+  "retrieval_method": "official website extraction via web browsing",
+  "papers": [
+    {
+      "title": "The Flexibility Trap: Rethinking the Value of Arbitrary Order in Diffusion Language Models",
+      "label": "Outstanding Paper"
+    },
+    {
+      "title": "High-Accuracy Sampling for Diffusion Models and Log-Concave Distributions",
+      "label": "Outstanding Paper"
+    },
+    {
+      "title": "Position: The Alignment Community is Unintentionally Building a Censor’s Toolkit",
+      "label": "Outstanding Position Paper"
+    },
+    {
+      "title": "The Obfuscation Atlas: Mapping Where Honesty Emerges in RLVR with Deception Probes",
+      "label": "Honorable Mention"
+    },
+    {
+      "title": "Motion Attribution for Video Generation",
+      "label": "Honorable Mention"
+    },
+    {
+      "title": "How much can language models memorize?",
+      "label": "Honorable Mention"
+    },
+    {
+      "title": "A Random Matrix Perspective on the Consistency of Diffusion Models",
+      "label": "Honorable Mention"
+    },
+    {
+      "title": "To Grok Grokking: Provable Grokking in Ridge Regression",
+      "label": "Honorable Mention"
+    },
+    {
+      "title": "Position: AI/ML Deepfake Research is Misaligned with AI Generated Non-Consensual Intimate Imagery (AIG-NCII)",
+      "label": "Position Paper Honorable Mention"
+    }
+  ],
+  "note": "Bibliographic award facts extracted from the official announcement; not a copy of the article."
+}

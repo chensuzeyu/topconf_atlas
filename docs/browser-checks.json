@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-11T10:56:52.280787+00:00",
+  "passed": true,
+  "papers": 27794,
+  "translated": 27794,
+  "complete_chinese_coverage": true,
+  "checks": [
+    "category search and focus retention",
+    "detail and full bilingual abstract tabs",
+    "four conference distinction filters",
+    "ICML position track filter",
+    "management Chinese processing counts",
+    "mobile sidebar and no horizontal overflow",
+    "dark mode"
+  ],
+  "console_errors": []
+}

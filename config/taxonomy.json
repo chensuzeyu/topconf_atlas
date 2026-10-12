@@ -1,0 +1,537 @@
+[
+  {
+    "slug": "llm_agent",
+    "group": "语言模型与智能体",
+    "icon": "🦾",
+    "name": "LLM Agent",
+    "patterns": [
+      "\\bagent",
+      "tool.?use",
+      "gui grounding",
+      "web navigation"
+    ]
+  },
+  {
+    "slug": "llm_reasoning",
+    "group": "语言模型与智能体",
+    "icon": "🧠",
+    "name": "LLM 推理",
+    "patterns": [
+      "language model.{0,50}reason",
+      "chain.of.thought",
+      "\\breasoning\\b",
+      "test.time scal"
+    ]
+  },
+  {
+    "slug": "llm_alignment",
+    "group": "语言模型与智能体",
+    "icon": "🎯",
+    "name": "对齐与偏好优化",
+    "patterns": [
+      "\\balignment\\b",
+      "\\brlhf\\b",
+      "\\bdpo\\b",
+      "preference optim",
+      "reward model"
+    ]
+  },
+  {
+    "slug": "llm_efficiency",
+    "group": "语言模型与智能体",
+    "icon": "⚡",
+    "name": "LLM 效率",
+    "patterns": [
+      "kv.cache",
+      "speculative decod",
+      "language model.{0,40}efficien",
+      "long.context"
+    ]
+  },
+  {
+    "slug": "llm_evaluation",
+    "group": "语言模型与智能体",
+    "icon": "📊",
+    "name": "LLM 评测",
+    "patterns": [
+      "language model.{0,60}bench",
+      "llm.{0,30}evaluat"
+    ]
+  },
+  {
+    "slug": "pretraining",
+    "group": "语言模型与智能体",
+    "icon": "📚",
+    "name": "预训练与数据",
+    "patterns": [
+      "pre.train",
+      "pretrain",
+      "data curation",
+      "scaling law"
+    ]
+  },
+  {
+    "slug": "rag",
+    "group": "语言模型与智能体",
+    "icon": "🔍",
+    "name": "信息检索 / RAG",
+    "patterns": [
+      "\\brag\\b",
+      "retrieval.augment",
+      "information retrieval"
+    ]
+  },
+  {
+    "slug": "code",
+    "group": "语言模型与智能体",
+    "icon": "💻",
+    "name": "代码智能",
+    "patterns": [
+      "code generat",
+      "program synthes",
+      "coding agent",
+      "software engineer"
+    ]
+  },
+  {
+    "slug": "llm_other",
+    "group": "语言模型与智能体",
+    "icon": "💬",
+    "name": "语言模型其他",
+    "patterns": [
+      "language model",
+      "\\bllms?\\b"
+    ]
+  },
+  {
+    "slug": "image_generation",
+    "group": "生成与多模态",
+    "icon": "🎨",
+    "name": "图像生成与编辑",
+    "patterns": [
+      "image generat",
+      "text.to.image",
+      "image edit",
+      "image diffusion"
+    ]
+  },
+  {
+    "slug": "video_generation",
+    "group": "生成与多模态",
+    "icon": "🎬",
+    "name": "视频生成",
+    "patterns": [
+      "video generat",
+      "text.to.video",
+      "video diffusion"
+    ]
+  },
+  {
+    "slug": "multimodal",
+    "group": "生成与多模态",
+    "icon": "🧩",
+    "name": "多模态 VLM",
+    "patterns": [
+      "vision.language",
+      "multimodal",
+      "multi.modal",
+      "\\bvlm"
+    ]
+  },
+  {
+    "slug": "vlm_reasoning",
+    "group": "生成与多模态",
+    "icon": "🧠",
+    "name": "VLM 推理",
+    "patterns": [
+      "visual reason",
+      "spatial reason",
+      "multimodal reason"
+    ]
+  },
+  {
+    "slug": "audio",
+    "group": "生成与多模态",
+    "icon": "🎵",
+    "name": "音频与语音",
+    "patterns": [
+      "\\baudio\\b",
+      "\\bspeech\\b",
+      "\\bmusic\\b"
+    ]
+  },
+  {
+    "slug": "aigc_detection",
+    "group": "生成与多模态",
+    "icon": "🔎",
+    "name": "生成内容检测与水印",
+    "patterns": [
+      "deepfake",
+      "generated.{0,20}detect",
+      "watermark"
+    ]
+  },
+  {
+    "slug": "generative_models",
+    "group": "生成与多模态",
+    "icon": "🌊",
+    "name": "生成模型与扩散理论",
+    "patterns": [
+      "\\bdiffusion\\b",
+      "flow match",
+      "generative model",
+      "normalizing flow"
+    ]
+  },
+  {
+    "slug": "3d_vision",
+    "group": "视觉感知",
+    "icon": "🧊",
+    "name": "3D 视觉与重建",
+    "patterns": [
+      "\\b3d\\b",
+      "\\b4d\\b",
+      "gaussian splat",
+      "neural radiance",
+      "point cloud",
+      "reconstruction"
+    ]
+  },
+  {
+    "slug": "detection",
+    "group": "视觉感知",
+    "icon": "🎯",
+    "name": "目标检测与识别",
+    "patterns": [
+      "object detect",
+      "object recogn",
+      "open.vocab",
+      "\\bdetr\\b"
+    ]
+  },
+  {
+    "slug": "segmentation",
+    "group": "视觉感知",
+    "icon": "✂️",
+    "name": "分割与定位",
+    "patterns": [
+      "segment",
+      "visual ground"
+    ]
+  },
+  {
+    "slug": "restoration",
+    "group": "视觉感知",
+    "icon": "🖼️",
+    "name": "图像恢复与计算成像",
+    "patterns": [
+      "restoration",
+      "denois",
+      "deblur",
+      "super.resolution",
+      "computational imag",
+      "\\boptic",
+      "\\bimaging\\b"
+    ]
+  },
+  {
+    "slug": "remote_sensing",
+    "group": "视觉感知",
+    "icon": "🛰️",
+    "name": "遥感",
+    "patterns": [
+      "remote sens",
+      "satellite imag",
+      "aerial imag"
+    ]
+  },
+  {
+    "slug": "anomaly_detection",
+    "group": "视觉感知",
+    "icon": "🔍",
+    "name": "异常检测",
+    "patterns": [
+      "anomaly detect",
+      "defect detect"
+    ]
+  },
+  {
+    "slug": "human",
+    "group": "视觉感知",
+    "icon": "🧑",
+    "name": "人体与动作理解",
+    "patterns": [
+      "human pose",
+      "human motion",
+      "gesture",
+      "avatar",
+      "body model",
+      "action recogn"
+    ]
+  },
+  {
+    "slug": "video_understanding",
+    "group": "视觉感知",
+    "icon": "📹",
+    "name": "视频理解与跟踪",
+    "patterns": [
+      "video understand",
+      "video question",
+      "video reason",
+      "tracking",
+      "temporal ground"
+    ]
+  },
+  {
+    "slug": "autonomous_driving",
+    "group": "决策与具身",
+    "icon": "🚗",
+    "name": "自动驾驶",
+    "patterns": [
+      "autonomous driv",
+      "\\bvehicle",
+      "\\blidar\\b",
+      "\\bv2x\\b"
+    ]
+  },
+  {
+    "slug": "robotics",
+    "group": "决策与具身",
+    "icon": "🤖",
+    "name": "机器人与具身智能",
+    "patterns": [
+      "robot",
+      "embodied",
+      "manipulation",
+      "vision.language.action",
+      "\\bvla\\b"
+    ]
+  },
+  {
+    "slug": "reinforcement_learning",
+    "group": "决策与具身",
+    "icon": "🎮",
+    "name": "强化学习",
+    "patterns": [
+      "reinforcement learn",
+      "\\bpolicy\\b",
+      "\\bbandit",
+      "\\bppo\\b"
+    ]
+  },
+  {
+    "slug": "world_models",
+    "group": "决策与具身",
+    "icon": "🌍",
+    "name": "世界模型",
+    "patterns": [
+      "world model",
+      "environment model",
+      "model.based plan"
+    ]
+  },
+  {
+    "slug": "representation",
+    "group": "基础与理论",
+    "icon": "🔄",
+    "name": "表示与自监督学习",
+    "patterns": [
+      "representation learn",
+      "self.supervis",
+      "contrastive learn"
+    ]
+  },
+  {
+    "slug": "optimization",
+    "group": "基础与理论",
+    "icon": "📐",
+    "name": "优化与训练",
+    "patterns": [
+      "optimiz",
+      "gradient",
+      "convergence"
+    ]
+  },
+  {
+    "slug": "learning_theory",
+    "group": "基础与理论",
+    "icon": "📏",
+    "name": "学习理论",
+    "patterns": [
+      "generalization bound",
+      "learning theory",
+      "provable",
+      "sample complexity"
+    ]
+  },
+  {
+    "slug": "causality",
+    "group": "基础与理论",
+    "icon": "🔗",
+    "name": "因果推理",
+    "patterns": [
+      "causal",
+      "counterfactual"
+    ]
+  },
+  {
+    "slug": "interpretability",
+    "group": "基础与理论",
+    "icon": "🔬",
+    "name": "可解释性",
+    "patterns": [
+      "interpretability",
+      "mechanistic",
+      "sparse autoencoder",
+      "feature attribution"
+    ]
+  },
+  {
+    "slug": "compression",
+    "group": "基础与理论",
+    "icon": "📦",
+    "name": "模型压缩与系统",
+    "patterns": [
+      "quantiz",
+      "prun",
+      "distill",
+      "model compress",
+      "hardware"
+    ]
+  },
+  {
+    "slug": "graph",
+    "group": "基础与理论",
+    "icon": "🕸️",
+    "name": "图学习",
+    "patterns": [
+      "graph neural",
+      "graph learn",
+      "\\bgnns?\\b"
+    ]
+  },
+  {
+    "slug": "federated",
+    "group": "基础与理论",
+    "icon": "🤝",
+    "name": "联邦与分布式学习",
+    "patterns": [
+      "federated",
+      "distributed learn",
+      "decentralized"
+    ]
+  },
+  {
+    "slug": "time_series",
+    "group": "基础与理论",
+    "icon": "📈",
+    "name": "时间序列",
+    "patterns": [
+      "time.series",
+      "forecast"
+    ]
+  },
+  {
+    "slug": "probabilistic",
+    "group": "基础与理论",
+    "icon": "🎲",
+    "name": "概率建模与不确定性",
+    "patterns": [
+      "bayesian",
+      "uncertainty",
+      "monte carlo",
+      "conformal"
+    ]
+  },
+  {
+    "slug": "medical",
+    "group": "科学与可信 AI",
+    "icon": "🏥",
+    "name": "医学与健康",
+    "patterns": [
+      "medical",
+      "clinical",
+      "pathology",
+      "healthcare",
+      "\\bmri\\b"
+    ]
+  },
+  {
+    "slug": "biology",
+    "group": "科学与可信 AI",
+    "icon": "🧬",
+    "name": "计算生物与分子",
+    "patterns": [
+      "protein",
+      "molecular",
+      "biolog",
+      "genomic"
+    ]
+  },
+  {
+    "slug": "physics",
+    "group": "科学与可信 AI",
+    "icon": "⚛️",
+    "name": "科学计算与物理",
+    "patterns": [
+      "\\bpde",
+      "physical scien",
+      "physics.inform",
+      "neural operator"
+    ]
+  },
+  {
+    "slug": "earth",
+    "group": "科学与可信 AI",
+    "icon": "🌏",
+    "name": "气候与地球科学",
+    "patterns": [
+      "climate",
+      "weather",
+      "geoscien"
+    ]
+  },
+  {
+    "slug": "safety",
+    "group": "科学与可信 AI",
+    "icon": "🛡️",
+    "name": "安全、隐私与鲁棒性",
+    "patterns": [
+      "\\bsafety\\b",
+      "\\bprivacy\\b",
+      "adversarial",
+      "jailbreak",
+      "robustness"
+    ]
+  },
+  {
+    "slug": "social",
+    "group": "科学与可信 AI",
+    "icon": "👥",
+    "name": "社会计算与立场论文",
+    "patterns": [
+      "^position:",
+      "fairness",
+      "social",
+      "peer review"
+    ]
+  },
+  {
+    "slug": "benchmark",
+    "group": "科学与可信 AI",
+    "icon": "🗂️",
+    "name": "数据集与评测",
+    "patterns": [
+      "benchmark",
+      "dataset",
+      "evaluation"
+    ]
+  },
+  {
+    "slug": "other",
+    "group": "其他",
+    "icon": "📂",
+    "name": "其他",
+    "patterns": []
+  }
+]

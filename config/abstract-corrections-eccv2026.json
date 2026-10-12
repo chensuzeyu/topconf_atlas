@@ -1,0 +1,32 @@
+[
+  {
+    "event_ids": [
+      4680,
+      6105
+    ],
+    "title": "Mind-to-Face: Neural-Driven Photorealistic Avatar Synthesis via EEG Decoding",
+    "original_abstract_sha256": "6af1757cb5afa6943a176ac71d4a63e77d97e6c0181e0539a1ab1e5da3d85116",
+    "abstract_en": "Current expressive avatar systems rely heavily on visual cuesand often fail when faces are occluded or emotions remain internal. Wepresent Mind-to-Face, the first framework to decode non-invasive elec-troencephalogram (EEG) signals directly into high-fidelity facial expres-sions. We build a dual-modality recording setup that captures synchro-nized EEG and multi-view facial video during emotion-eliciting stimuli,providing precise supervision for neural-to-visual learning. Our modeluses a CNN-Transformer encoder to map EEG signals into dense 3Dposition maps that sample over 65k vertices, capturing fine-scale geom-etry and subtle emotional dynamics, and renders them through a mod-ified 3D Gaussian Splatting pipeline for photorealistic, view-consistentresults. Extensive evaluations show that EEG alone can reliably predictdynamic, subject-specific facial expressions, including subtle emotionalresponses, demonstrating that neural signals contain far richer affectiveand geometric information than previously assumed. Mind-to-Face es-tablishes a new paradigm for neural-driven avatars, enabling personal-ized, emotion-aware telepresence and cognitive interaction in immersive environments.",
+    "source_url": "https://media.eventhosts.cc/Conferences/ECCV2026/pdfs/6990.pdf",
+    "source_pdf_sha256": "374b229e86a1a980855d71b63276b376dc7c60f2f007194e80bd02b76f254691",
+    "local_pdf": "pdf/ECCV2026/eccv2026-f381f06b1de58fb3.pdf",
+    "page": 1,
+    "reviewed_at": "2026-10-09T14:56:44+00:00",
+    "reason": "Official abstract JSON truncates the final sentence; restored its last word and punctuation from the official full-text PDF, page 1."
+  },
+  {
+    "event_ids": [
+      3798,
+      6057
+    ],
+    "title": "Zero-shot Depth from Defocus",
+    "original_abstract_sha256": "3955c1a96512184a4a1c03bd9308541a63b80bb550bb499a91b76cd29935db0c",
+    "abstract_en": "Depth from Defocus (DfD) is the task of estimating a densemetric depth map from a focus stack. Unlike previous works overfittingto a certain dataset, this paper focuses on the challenging and practi-cal setting of zero-shot generalization. We first propose a new real-worldDfD benchmark ZEDD, which contains 8.3× more scenes and signifi-cantly higher quality images and ground-truth depth maps comparedto previous benchmarks. We also design a novel network architecturenamed FOSSA. FOSSA is a Transformer-based architecture with noveldesigns tailored to the DfD task. The key contribution is a stack atten-tion layer with a focus distance embedding, allowing efficient informa-tion exchange across the focus stack. Finally, we develop a new trainingdata pipeline allowing us to utilize existing large-scale RGBD datasetsto generate synthetic focus stacks. Experiment results on ZEDD andother benchmarks show a significant improvement over the baselines,reducing errors by up to 55.7%. The ZEDD benchmark is released athttps://zedd.cs.princeton.edu. The code and checkpoints are re-leased at https://github.com/princeton-vl/FOSSA.",
+    "source_url": "https://media.eventhosts.cc/Conferences/ECCV2026/pdfs/3173.pdf",
+    "source_pdf_sha256": "120479ec0e7d4b39b48af52bbf779d3d3f80c7dd131413031349eb3e20095566",
+    "local_pdf": "pdf/ECCV2026/eccv2026-c4e6f712d3632684.pdf",
+    "page": 1,
+    "reviewed_at": "2026-10-09T23:54:31+00:00",
+    "reason": "Official abstract JSON includes the first-page figure labels after the real abstract; removed that figure-only suffix, including damaged delta metric glyphs, after checking the official PDF page 1."
+  }
+]

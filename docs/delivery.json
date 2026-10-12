@@ -1,0 +1,130 @@
+{
+  "delivered_at": "2026-10-09T15:20:57+00:00",
+  "url": "http://127.0.0.1:18766",
+  "project": "/Knowin/sim/chensuzeyu/research/topconf_atlas",
+  "selected_papers": 1677,
+  "translated_papers": 1677,
+  "topic_categories": 46,
+  "unit_tests": {
+    "passed": 14
+  },
+  "data_audit": {
+    "checked_at": "2026-10-09T23:59:41+00:00",
+    "database": "ok",
+    "total": 1677,
+    "conferences": [
+      {
+        "conference": "ICLR2026",
+        "papers": 224,
+        "tiers": {
+          "oral": 224
+        },
+        "tracks": {
+          "main": 224
+        },
+        "translated": 224,
+        "awards": 3,
+        "cached_pdfs": 1
+      },
+      {
+        "conference": "CVPR2026",
+        "papers": 716,
+        "tiers": {
+          "highlight": 575,
+          "oral": 141
+        },
+        "tracks": {
+          "main": 716
+        },
+        "translated": 716,
+        "awards": 5,
+        "cached_pdfs": 5
+      },
+      {
+        "conference": "ICML2026",
+        "papers": 574,
+        "tiers": {
+          "oral": 168,
+          "spotlight": 406
+        },
+        "tracks": {
+          "main": 536,
+          "position": 38
+        },
+        "translated": 574,
+        "awards": 9,
+        "cached_pdfs": 2
+      },
+      {
+        "conference": "ECCV2026",
+        "papers": 163,
+        "tiers": {
+          "spotlight": 135,
+          "oral": 28
+        },
+        "tracks": {
+          "main": 163
+        },
+        "translated": 163,
+        "awards": 0,
+        "cached_pdfs": 3
+      }
+    ],
+    "categories": 46,
+    "issues": [],
+    "warnings": [],
+    "passed": true
+  },
+  "browser_checks": {
+    "checked_at": "2026-10-09T23:59:46.649948+00:00",
+    "passed": true,
+    "checks": [
+      "category search and focus retention",
+      "detail and full bilingual abstract tabs",
+      "four conference distinction filters",
+      "ICML position track filter",
+      "management complete Chinese coverage",
+      "mobile sidebar and no horizontal overflow",
+      "dark mode"
+    ],
+    "console_errors": []
+  },
+  "pdf_policy": "All confirmed links retained; 11 full texts cached and verified; remaining full texts support on-demand or batch download.",
+  "known_coverage_limit": "ICLR official public data only confirms Oral; independent Spotlight list has not been verified. ECCV awards page currently unavailable.",
+  "database_backup": "data/backups/atlas-math-fix.sqlite3",
+  "updated_at": "2026-10-11T10:58:24.690743+00:00",
+  "math_checks": {
+    "conferences": {
+      "CVPR2026": {
+        "papers": 716,
+        "fields": 3580,
+        "equations": 489
+      },
+      "ECCV2026": {
+        "papers": 163,
+        "fields": 815,
+        "equations": 0
+      },
+      "ICLR2026": {
+        "papers": 224,
+        "fields": 1120,
+        "equations": 221
+      },
+      "ICML2026": {
+        "papers": 574,
+        "fields": 2870,
+        "equations": 1104
+      }
+    },
+    "errors": [],
+    "leftovers": [],
+    "safe": true,
+    "checked_at": "2026-10-10T00:01:09.186366+00:00",
+    "console_errors": [],
+    "failed_fonts": [],
+    "passed": true
+  },
+  "superseded_by": "docs/full-coverage-delivery.json",
+  "full_coverage_papers": 27794,
+  "full_coverage_translated": 27794
+}

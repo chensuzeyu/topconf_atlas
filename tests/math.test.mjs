@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {tokenizeRichText, normalizeEquation, mathOptions, ALIASES} from '../frontend/math.mjs';
+const require=createRequire(import.meta.url);
+const katex=require('../frontend/vendor/katex/katex.min.js');
+const math=text=>tokenizeRichText(text).filter(t=>t.kind==='math');
+
+assert.equal(math(String.raw`$x^2$ and \( \boldsymbol{U} \Sigma \)` ).length,2);
+assert.equal(math(String.raw`$$\frac{1}{n}$$`)[0].display,true);
+assert.equal(math(String.raw`\[x+y\]`)[0].display,true);
+assert.equal(math(String.raw`\pi_0`)[0].tex,String.raw`\pi_0`);
+assert.equal(math('Cost $5 and $10.').length,0);
+assert.equal(math(String.raw`Price \$10; 5\%; Chen \& Chow`).length,0);
+assert.equal(tokenizeRichText(String.raw`\textbf{中文与 $x^2$}`)[0].children[1].tex,'x^2');
+assert.equal(tokenizeRichText(String.raw`$\texttt{\textbf{LATA}}$`)[0].kind,'code');
+assert.equal(tokenizeRichText(String.raw`$n+1`)[0].text,'$n+1');
+const matrix=String.raw`\begin{bmatrix}a & b \\ c & d\end{bmatrix}`;
+const token=math('$'+matrix+'$')[0];
+assert.equal(token.tex,matrix); // Real TeX row breaks are never collapsed.
+const adjacent=String.raw`\begin{bmatrix}a & b \\\alpha & d\end{bmatrix}`;
+assert.equal(math('$'+adjacent+'$')[0].tex,adjacent);
+assert.doesNotThrow(()=>katex.renderToString(token.tex,mathOptions()));
+assert.doesNotThrow(()=>katex.renderToString(normalizeEquation(String.raw`SegCoverage@\alpha (\mathrm{SCR}@\alpha\)`),mathOptions()));
+assert.equal(math(String.raw`\$\approx$1\%`)[0].tex,String.raw`\approx`);
+const id='icml2026-ef7b30eeedea7e50';
+assert.doesNotThrow(()=>katex.renderToString(String.raw`\AC^0 \subseteq \NC^1`,mathOptions(id)));
+assert.notEqual(ALIASES['iclr2026-b22813abf7f09692'].method,ALIASES['icml2026-447e2cef4c1ce917'].method);
+assert.equal(tokenizeRichText(String.raw`{\tracker}`,ALIASES['cvpr2026-9ee7cf1a7775c812'])[0].children[0].text,'SVLTrack');
+assert.equal(math('𝐱')[0].tex,'𝐱');
+assert.doesNotThrow(()=>katex.renderToString(math('𝐱')[0].tex,mathOptions()));
+console.log('Math delimiter, escape, nested format, macro isolation, Unicode, currency and matrix regression checks passed.');

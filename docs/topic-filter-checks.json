@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-10-11T10:54:40.159457+00:00",
+  "base_url": "http://127.0.0.1:18767",
+  "topic": "robotics",
+  "total": 1255,
+  "exclusive_count": 51,
+  "multimodal_optimization_count": 7,
+  "checks": [
+    "all cross-topic counts and exclusive count agree with full catalog",
+    "AND intersection and pagination reset",
+    "URL preserves repeated tags after refresh",
+    "mutual exclusion switches correctly in both directions",
+    "conference scope, tier filtering, and clear-tags preserving other filters",
+    "mobile width and checkbox interaction"
+  ],
+  "console_errors": [],
+  "passed": true
+}

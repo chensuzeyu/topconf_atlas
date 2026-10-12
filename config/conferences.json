@@ -1,0 +1,198 @@
+[
+  {
+    "id": "ICLR2026",
+    "name": "ICLR",
+    "year": 2026,
+    "domain": "iclr.cc",
+    "decision_date": "2026-01-25",
+    "start_date": "2026-04-23",
+    "icon": "🔬",
+    "adapter": "miniconf",
+    "source_group": "ICLR.cc/2026/Conference",
+    "extra_groups": [],
+    "enabled": true,
+    "award_sources": [
+      {
+        "url": "https://blog.iclr.cc/2026/04/23/announcing-the-iclr-2026-outstanding-papers/",
+        "papers": [
+          {
+            "title": "Transformers are Inherently Succinct",
+            "label": "Outstanding Paper"
+          },
+          {
+            "title": "LLMs Get Lost In Multi-Turn Conversation",
+            "label": "Outstanding Paper"
+          },
+          {
+            "title": "The Polar Express: Optimal Matrix Sign Methods and their Application to the Muon Algorithm",
+            "label": "Honorable Mention"
+          }
+        ]
+      }
+    ],
+    "proceedings_index_url": "https://proceedings.iclr.cc/paper_files/paper/2026",
+    "scope": "accepted",
+    "distinctions_enabled": true,
+    "tracks": {
+      "main": "主研究轨道"
+    }
+  },
+  {
+    "id": "CVPR2026",
+    "name": "CVPR",
+    "year": 2026,
+    "domain": "cvpr.thecvf.com",
+    "decision_date": "2026-02-20",
+    "start_date": "2026-06-03",
+    "icon": "📷",
+    "adapter": "cvpr-listings",
+    "source_group": "thecvf.com/CVPR/2026/Conference",
+    "extra_groups": [],
+    "enabled": true,
+    "award_sources": [
+      {
+        "url": "https://cvpr.thecvf.com/Conferences/2026/News/Best_Papers",
+        "papers": [
+          {
+            "title": "Efficiently Reconstructing Dynamic Scenes One D4RT at a Time",
+            "label": "Best Paper"
+          },
+          {
+            "title": "Native and Compact Structured Latents for 3D Generation",
+            "label": "Best Student Paper"
+          },
+          {
+            "title": "NitroGen: An Open Foundation Model for Generalist Gaming Agents",
+            "label": "Best Paper Honorable Mention"
+          },
+          {
+            "title": "SAM 3D: 3Dfy Anything in Images",
+            "label": "Best Paper Honorable Mention"
+          },
+          {
+            "title": "ChordEdit: One-Step Low-Energy Transport for Image Editing",
+            "label": "Best Student Paper Honorable Mention"
+          }
+        ]
+      }
+    ],
+    "scope": "accepted",
+    "distinctions_enabled": true,
+    "tracks": {
+      "main": "主研究轨道"
+    }
+  },
+  {
+    "id": "ICML2026",
+    "name": "ICML",
+    "year": 2026,
+    "domain": "icml.cc",
+    "decision_date": "2026-04-30",
+    "start_date": "2026-07-06",
+    "icon": "🧪",
+    "adapter": "miniconf",
+    "source_group": "ICML.cc/2026/Conference",
+    "extra_groups": [
+      "ICML.cc/2026/Position_Paper_Track"
+    ],
+    "enabled": true,
+    "award_sources": [
+      {
+        "url": "https://blog.icml.cc/2026/07/05/announcing-the-icml-2026-awards/",
+        "papers": [
+          {
+            "title": "The Flexibility Trap: Rethinking the Value of Arbitrary Order in Diffusion Language Models",
+            "label": "Outstanding Paper"
+          },
+          {
+            "title": "High-Accuracy Sampling for Diffusion Models and Log-Concave Distributions",
+            "label": "Outstanding Paper"
+          },
+          {
+            "title": "Position: The Alignment Community is Unintentionally Building a Censor’s Toolkit",
+            "label": "Outstanding Position Paper"
+          },
+          {
+            "title": "The Obfuscation Atlas: Mapping Where Honesty Emerges in RLVR with Deception Probes",
+            "label": "Honorable Mention"
+          },
+          {
+            "title": "Motion Attribution for Video Generation",
+            "label": "Honorable Mention"
+          },
+          {
+            "title": "How much can language models memorize?",
+            "label": "Honorable Mention"
+          },
+          {
+            "title": "A Random Matrix Perspective on the Consistency of Diffusion Models",
+            "label": "Honorable Mention"
+          },
+          {
+            "title": "To Grok Grokking: Provable Grokking in Ridge Regression",
+            "label": "Honorable Mention"
+          },
+          {
+            "title": "Position: AI/ML Deepfake Research is Misaligned with AI Generated Non-Consensual Intimate Imagery (AIG-NCII)",
+            "label": "Position Paper Honorable Mention"
+          }
+        ]
+      }
+    ],
+    "proceedings_index_url": "https://proceedings.mlr.press/v306/",
+    "proceedings_adapter": "pmlr",
+    "scope": "accepted",
+    "distinctions_enabled": true,
+    "tracks": {
+      "main": "主研究轨道",
+      "position": "Position Track"
+    }
+  },
+  {
+    "id": "ECCV2026",
+    "name": "ECCV",
+    "year": 2026,
+    "domain": "eccv.ecva.net",
+    "decision_date": "2026-06-17",
+    "start_date": "2026-09-08",
+    "icon": "🎞️",
+    "adapter": "miniconf",
+    "source_group": "thecvf.com/ECCV/2026/Conference",
+    "extra_groups": [],
+    "enabled": true,
+    "abstract_corrections_file": "config/abstract-corrections-eccv2026.json",
+    "scope": "accepted",
+    "distinctions_enabled": true,
+    "tracks": {
+      "main": "主研究轨道"
+    }
+  },
+  {
+    "id": "NeurIPS2026",
+    "name": "NeurIPS",
+    "year": 2026,
+    "domain": "neurips.cc",
+    "decision_date": "2026-09-24",
+    "start_date": "2026-12-06",
+    "icon": "🧠",
+    "adapter": "neurips-full",
+    "source_group": "NeurIPS.cc/2026/Conference",
+    "extra_groups": [
+      "NeurIPS.cc/2026/Evaluations_and_Datasets_Track",
+      "NeurIPS.cc/2026/Position_Paper_Track"
+    ],
+    "enabled": true,
+    "scope": "accepted",
+    "distinctions_enabled": false,
+    "tracks": {
+      "main": "主研究轨道",
+      "evaluations_datasets": "Evaluations & Datasets",
+      "position": "Position Track",
+      "unverified": "轨道待核验"
+    },
+    "journal_index_urls": [
+      "https://jmlr.org/tmlr/papers/",
+      "https://jmlr.org/papers/v27/"
+    ]
+  }
+]

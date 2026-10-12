@@ -1,0 +1,9 @@
+{
+  "shared_proxy": "http://127.0.0.1:19082",
+  "shared_selector_log": "/Knowin/sim/chensuzeyu/.mihomo/selector.log",
+  "automatic_route_switches": 9,
+  "logged_unknown_usage_requests": 206,
+  "unknown_requests_finished_within_35_seconds_of_switch": 178,
+  "interpretation": "Temporal correlation suggests shared route changes contribute to simultaneous stream interruptions; this does not establish every individual failure cause.",
+  "mitigation": "Temporary project-only four-route round-robin proxy on 127.0.0.1:18768, persistent HTTP sessions per worker, response completion drain, eight concurrent batches, dispatch circuit breaker and approved budget. Shared proxy configuration unchanged. Occasional stream interruptions remained and were retried."
+}

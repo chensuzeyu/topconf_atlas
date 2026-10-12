@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="按会议与研究主题浏览 ICLR、CVPR、ICML、ECCV、NeurIPS 2026 的完整录用论文，阅读完整中文摘要。">
+  <meta name="theme-color" content="#2c2e43"><title>顶会论文库 · TopConf Atlas</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#content">跳到论文内容</a>
+  <header class="header">
+    <div class="header-inner">
+      <button id="menu-toggle" class="icon-button mobile-only" aria-label="展开分类栏" aria-expanded="false">☰</button>
+      <a class="brand" data-nav href="/"><span class="book-mark" aria-hidden="true">▤</span> TopConf Atlas <small>顶会论文笔记</small></a>
+      <form id="global-search" class="global-search" role="search"><label class="sr-only" for="search-input">搜索论文、作者或摘要</label><span aria-hidden="true">⌕</span><input id="search-input" placeholder="搜索论文、作者、摘要" autocomplete="off"><kbd>/</kbd></form>
+      <button id="theme-toggle" class="icon-button" aria-label="切换深色模式">☼</button>
+      <a data-nav class="manage-link" href="/manage/">管理与更新</a>
+    </div>
+    <nav id="conference-nav" class="conference-nav" aria-label="会议导航"></nav>
+  </header>
+  <div id="overlay" class="overlay" hidden></div>
+  <div class="shell"><aside id="sidebar" class="sidebar" aria-label="论文分类"></aside><main id="content" tabindex="-1"><div class="loading">正在读取本地论文库…</div></main></div>
+  <footer class="footer">TopConf Atlas · 收录官方录用论文 · 精选标签可选筛选 · 中文内容由模型辅助生成，可逐篇校对</footer>
+  <div id="toast" role="status" class="toast" hidden></div>
+</body>
+</html>

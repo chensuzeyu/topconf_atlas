@@ -1,0 +1,50 @@
+{
+  "explanation": "Display-only expansions checked against the public full-text PDF. Other per-paper named aliases come from an explicit name in the title or original abstract; no global method macro expansion is shared between papers.",
+  "sources": [
+    {
+      "paper_id": "cvpr2026-27148cb53283d1c3",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Jiang_Cross-Hand_Latent_Representation_for_Vision-Language-Action_Models_CVPR_2026_paper.pdf",
+      "final_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Jiang_Cross-Hand_Latent_Representation_for_Vision-Language-Action_Models_CVPR_2026_paper.pdf",
+      "downloaded_at": "2026-10-09T23:54:32+00:00",
+      "bytes": 6357269,
+      "sha256": "854b1c21c2eafc3a850843c1946cf59737727bb683d2b962c4d96ede5445fae8",
+      "file": "pdf/CVPR2026/cvpr2026-27148cb53283d1c3.pdf"
+    },
+    {
+      "paper_id": "cvpr2026-664f9bb296d414b6",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Lamri_Fully_Decentralized_Certified_Unlearning_CVPR_2026_paper.pdf",
+      "final_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Lamri_Fully_Decentralized_Certified_Unlearning_CVPR_2026_paper.pdf",
+      "downloaded_at": "2026-10-09T23:54:30+00:00",
+      "bytes": 626942,
+      "sha256": "2849794fbf09fd2bc28bfdef8725f4c81241c3d95a4f911f9f8df27d2c221650",
+      "file": "pdf/CVPR2026/cvpr2026-664f9bb296d414b6.pdf"
+    },
+    {
+      "paper_id": "cvpr2026-9ee7cf1a7775c812",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Zheng_Learning_to_Track_Instance_from_Single_Nature_Language_Description_CVPR_2026_paper.pdf",
+      "final_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Zheng_Learning_to_Track_Instance_from_Single_Nature_Language_Description_CVPR_2026_paper.pdf",
+      "downloaded_at": "2026-10-09T23:54:30+00:00",
+      "bytes": 2365115,
+      "sha256": "5638bf49a59b406c0f895327881d01fddbcb6114ebf235296f69f0706f684dfc",
+      "file": "pdf/CVPR2026/cvpr2026-9ee7cf1a7775c812.pdf"
+    },
+    {
+      "paper_id": "icml2026-4c913b559e4e399f",
+      "source_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/li26hc/li26hc.pdf",
+      "final_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/li26hc/li26hc.pdf",
+      "downloaded_at": "2026-10-09T23:54:28+00:00",
+      "bytes": 1983355,
+      "sha256": "784f54cc0cfc3c4caf335a87e4f504546e8b5d05895a56e09c4e1b389c1f2598",
+      "file": "pdf/ICML2026/icml2026-4c913b559e4e399f.pdf"
+    },
+    {
+      "paper_id": "cvpr2026-68321373d20b7129",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Peng_Gated_KalmaNet_A_Fading_Memory_Layer_through_Test-time_Ridge_Regression_CVPR_2026_paper.pdf",
+      "final_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Peng_Gated_KalmaNet_A_Fading_Memory_Layer_through_Test-time_Ridge_Regression_CVPR_2026_paper.pdf",
+      "downloaded_at": "2026-10-09T23:54:30+00:00",
+      "bytes": 1240785,
+      "sha256": "82020934b975a9b88f74d6ac947f0cb467b4e0ba7ae8d6df072df2dcf253ea37",
+      "file": "pdf/CVPR2026/cvpr2026-68321373d20b7129.pdf"
+    }
+  ]
+}

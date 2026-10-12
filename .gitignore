@@ -1,0 +1,57 @@
+# Python environments and generated caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
+build/
+dist/
+node_modules/
+
+# Credentials and machine-specific settings; sanitized examples may be tracked
+.env
+.env.*
+!.env.example
+!.env.*.example
+auth.json
+credentials.json
+*.key
+*.pem
+*.pfx
+*.p12
+/id_*
+/.ssh/
+/.codex/
+
+# Mutable research data is backed up separately from source code.
+# Keep only the small, curated official award evidence needed by collection.
+/data/*
+!/data/web_sources/
+/data/web_sources/*
+!/data/web_sources/index.json
+!/data/web_sources/ICLR2026-awards.json
+!/data/web_sources/ICML2026-awards.json
+*.sqlite3
+*.sqlite3-*
+*.sqlite3.*
+*.db
+*.db-*
+
+# Local runtime, exploratory downloads, logs and temporary files
+/.runtime/
+/probe/
+*.log
+*.log.*
+*.tmp
+*.bak
+*.backup-*
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
