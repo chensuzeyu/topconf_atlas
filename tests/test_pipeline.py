@@ -200,6 +200,10 @@ class DatabaseTests(unittest.TestCase):
 
 
 class TranslationTests(unittest.TestCase):
+    def test_end_to_end_spelling_is_not_a_measured_number(self):
+        self.assertEqual(enrich.numeric_tokens('end-2-end and end2end learning over 12 tasks'), {'12'})
+        self.assertEqual(enrich.numeric_tokens('end-2-end learning with 2 robots'), {'2'})
+
     def test_numbers_attached_to_extracted_words_units_and_dimensions(self):
         self.assertEqual(enrich.numeric_tokens('with99.5%'), {'99.5'})
         self.assertEqual(enrich.numeric_tokens('1.3 million clips; 2.3 million images'),

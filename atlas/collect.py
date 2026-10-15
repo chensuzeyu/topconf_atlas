@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 from .storage import ROOT, DATA, connect, digest, dumps, now, write_json
 from .taxonomy import classify
 from .locking import locked
+from .rss import rss_proceedings
 
 RANK = {'unlabeled': 0, 'poster': 1, 'oral': 3, 'spotlight': 2, 'highlight': 2, 'award': 4}
 DISTINCTIONS = {'oral', 'spotlight', 'highlight'}
@@ -359,6 +360,7 @@ def cvpr_listings(conf, fetcher):
 
 def paper_links(rows, base):
     urls = []
+    explicit_pages = {urljoin(base, row['paper_url']) for row in rows if row.get('paper_url')}
     for row in sorted(rows, key=lambda r: r.get('eventtype') != 'Poster'):
         for field in ('paper_url', 'paper_pdf_url'):
             if row.get(field):
@@ -370,7 +372,8 @@ def paper_links(rows, base):
     # Imported oral events sometimes contain synthetic forum URLs. Prefer canonical media links.
     forums = [u for u in urls if 'openreview.net/forum?' in u and
               re.fullmatch(r'[A-Za-z0-9_]{8,20}', parse_qs(urlparse(u).query).get('id', [''])[0])]
-    landing = next(iter(forums), '') or next((u for u in urls if '/html/' in u or '/abs/' in u), '')
+    landing = next(iter(forums), '') or next((u for u in urls if '/html/' in u or '/abs/' in u
+                   or (u in explicit_pages and urlparse(u).path.lower().endswith('.html'))), '')
     pdf = next((u for u in urls if urlparse(u).path.lower().endswith('.pdf')), '')
     if not pdf and forums:
         pdf = forums[0].replace('/forum?', '/pdf?')
@@ -394,7 +397,7 @@ def award_records(conf, fetcher):
 
 def normalize(conf, rows, abstracts, awards=None):
     awards = awards or {}
-    allowed = {conf['source_group'], *conf.get('extra_groups', [])}
+    allowed = {g for g in [conf.get('source_group'), *conf.get('extra_groups', [])] if g}
     groups = defaultdict(list)
     excluded = Counter()
     eligible = {}
@@ -402,7 +405,11 @@ def normalize(conf, rows, abstracts, awards=None):
         group = parse_qs(urlparse(row.get('sourceurl') or '').query).get('id', [''])[0]
         official_index = (row.get('evidence_kind') == 'official_paper_index' and
                           row.get('sourceurl') == 'https://' + conf['domain'] + f'/virtual/{conf["year"]}/papers.html')
-        if group not in allowed and not official_index:
+        official_proceedings = (conf.get('adapter') == 'rss-proceedings' and
+                                row.get('evidence_kind') == 'proceedings' and
+                                row.get('sourceurl') == conf.get('proceedings_index_url') and
+                                row.get('listing_url') == conf.get('accepted_index_url'))
+        if group not in allowed and not official_index and not official_proceedings:
             excluded[row.get('sourceurl') or 'unknown source'] += 1
             continue
         decision = str(row.get('decision') or '')
@@ -470,6 +477,15 @@ def normalize(conf, rows, abstracts, awards=None):
                                'source_url': r.get('listing_url') or urljoin('https://' + conf['domain'], r.get('virtualsite_url') or ''),
                                'source_group': r.get('sourceurl'), 'kind': r.get('evidence_kind', 'conference_program')} for r in events]}
         paper.update(paper_links(ordered, 'https://' + conf['domain']))
+        for field in ('doi', 'session', 'program_id', 'abstract_source_url', 'authors_source_url',
+                      'program_authors_text', 'proceedings_match_method'):
+            if field in main:
+                paper[field] = main[field]
+        if conf.get('adapter') == 'rss-proceedings':
+            paper['proceedings_url'] = main['paper_url']
+            paper['evidence'].append({'event_id': main['id'], 'decision': 'Member of official proceedings',
+                'eventtype': None, 'source_url': main['paper_url'], 'source_group': conf['proceedings_index_url'],
+                'kind': 'proceedings'})
         paper['canonical_source_id'] = paper['paper_url'] or str(main['id'])
         # A shared title alone must never collide two different official papers.
         paper['id'] = conf['id'].lower() + '-' + digest(paper['canonical_source_id'])[:16]
@@ -519,6 +535,9 @@ def complete_abstracts(conf, papers, fetcher):
 
 
 def augment_proceedings(conf, papers, fetcher):
+    if conf.get('adapter') == 'rss-proceedings':
+        # RSS details already provide the canonical proceedings and PDF identities.
+        return {}
     url = conf.get('proceedings_index_url')
     if not url:
         return {}
@@ -594,7 +613,12 @@ def sync(conference=None, offline=False):
                   'status': 'collecting', 'complete': False}
         fetcher = Fetcher(conf['id'], offline)
         try:
-            adapter = cvpr_listings if conf.get('adapter') == 'cvpr-listings' else neurips_full if conf.get('adapter') == 'neurips-full' else miniconf
+            adapters = {'miniconf': miniconf, 'cvpr-listings': cvpr_listings,
+                        'neurips-full': neurips_full, 'rss-proceedings': rss_proceedings}
+            adapter_name = conf.get('adapter', 'miniconf')
+            if adapter_name not in adapters:
+                raise RuntimeError('Unknown conference adapter: ' + str(adapter_name))
+            adapter = adapters[adapter_name]
             rows, abstracts, coverage = adapter(conf, fetcher)
             awards = award_records(conf, fetcher)
             papers, quality = normalize(conf, rows, abstracts, awards)

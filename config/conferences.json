@@ -194,5 +194,43 @@
       "https://jmlr.org/tmlr/papers/",
       "https://jmlr.org/papers/v27/"
     ]
+  },
+  {
+    "id": "RSS2026",
+    "name": "RSS",
+    "year": 2026,
+    "domain": "roboticsconference.org",
+    "decision_date": "2026-04-27",
+    "start_date": "2026-07-13",
+    "icon": "🤖",
+    "adapter": "rss-proceedings",
+    "enabled": true,
+    "scope": "accepted",
+    "distinctions_enabled": false,
+    "tracks": {
+      "main": "主研究轨道"
+    },
+    "accepted_index_url": "https://roboticsconference.org/2026/program/papers/",
+    "proceedings_index_url": "https://www.roboticsproceedings.org/rss22/",
+    "volume_roman": "XXII",
+    "award_sources": [
+      {
+        "url": "https://roboticsconference.org/2026/program/awards/",
+        "papers": [
+          {
+            "title": "FlashSAC: Fast and Stable Off-Policy Reinforcement Learning for High-Dimensional Robot Control",
+            "label": "Outstanding Paper Award"
+          },
+          {
+            "title": "Muninn: Your Trajectory Diffusion Model But Faster",
+            "label": "Outstanding Student Paper Award"
+          },
+          {
+            "title": "NeuralActuator: Neural Actuation Modeling for Robot Dynamics and External Force Perception",
+            "label": "Outstanding Systems Paper in Memory of Seth Teller Award"
+          }
+        ]
+      }
+    ]
   }
 ]

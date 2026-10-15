@@ -43,6 +43,13 @@ credentials.json
 *.db
 *.db-*
 
+# Generated validation/delivery reports and browser screenshots stay local.
+# Preserve curated formula evidence and the original design reference.
+/docs/*.json
+!/docs/math-macro-sources.json
+/docs/screenshots/*
+!/docs/screenshots/reference.png
+
 # Local runtime, exploratory downloads, logs and temporary files
 /.runtime/
 /probe/

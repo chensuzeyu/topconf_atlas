@@ -6,17 +6,18 @@
 
 ## 当前范围
 
-以 2026-10-11 取得的官方公开资料为依据，收录五个会议的全部可核验录用论文，含普通 Poster / 非精选论文。**Oral、Spotlight、Highlight 是可选筛选维度，不是收录条件**；展示形式、录用依据、精选标签和获奖信息分别保存。当前去重后共有 **27,794 篇**。
+以原五会 2026-10-11、RSS 2026-10-15 取得的官方公开资料为依据，收录六个会议的全部可核验录用论文，含普通 Poster / 非精选论文。**Oral、Spotlight、Highlight 是可选筛选维度，不是收录条件**；展示形式、录用依据、精选标签和获奖信息分别保存。当前去重后共有 **28,004 篇**。
 
 | 会议 | 全部论文 | 普通 / 未启用标签 | Oral | Spotlight | Highlight |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | ICLR2026 | 5,353 | 5,129 | 224 | 未见独立标记 | — |
 | CVPR2026 | 4,047 | 3,331 | 141 | — | 575 |
 | ICML2026 | 6,554 | 5,980 | 168 | 406 | — |
+| RSS2026 | 210 | 210 | 不作为精选标签 | 不启用 | 不启用 |
 | ECCV2026 | 2,834 | 2,671 | 28 | 135 | — |
 | NeurIPS2026 | 9,006 | 9,006 | 本轮禁用 | 本轮禁用 | 本轮禁用 |
 
-表内精选列按主展示级别统计，同一论文可能另有官方 decision 标签；筛选按全部已确认标签匹配，多选取并集，论文不重复。普通论文表示没有已确认精选标签，不代表推断官方展示形式一定是 Poster。NeurIPS 本轮禁用精选标签，原始来源中的展示信息仍保存用于核验。46 个主题支持多标签分类与交叉筛选。
+表内精选列按主展示级别统计，同一论文可能另有官方 decision 标签；筛选按全部已确认标签匹配，多选取并集，论文不重复。普通论文表示没有已确认精选标签，不代表推断官方展示形式一定是 Poster。NeurIPS 本轮禁用精选标签，原始来源中的展示信息仍保存用于核验。RSS 的会议报告安排不作为精选 Oral 标签；210 篇论文覆盖 21 个官方 session，3 篇获奖论文可独立筛选。46 个主题支持多标签分类与交叉筛选。
 
 ICML 包含 6,341 篇主研究轨道、213 篇 Position Track。NeurIPS 已核验轨道为主研究 7,151 篇、Evaluations & Datasets 915 篇、Position 136 篇；另有 **804 篇轨道待核验**，官方论文名单、完整摘要和 canonical OpenReview 链接可核验，但公开导出缺少轨道字段。不能把它们猜成主研究轨道。Workshop、Blog、已确认期刊展示与复现活动不混入正式论文库。
 
@@ -56,7 +57,7 @@ ssh -N -L 18766:127.0.0.1:18766 <你的服务器 SSH Host>
 ## 更新与日常管理
 
 ```bash
-./scripts/atlas.sh sync                         # 更新五会全部录用论文
+./scripts/atlas.sh sync                         # 更新六会全部录用论文
 ./scripts/atlas.sh sync --conference ECCV2026  # 更新单个会议
 ./scripts/atlas.sh sync --offline              # 用原始快照复现筛选和去重
 ./scripts/atlas.sh enrich                      # 仅处理新增或原文已变化的论文
@@ -93,6 +94,7 @@ config/
   taxonomy.json          46 个研究主题及分组、slug、初始规则
 atlas/
   collect.py             官方采集、分页完整性、事件关联去重、增量更新
+  rss.py                 RSS 接收名单与论文集对账、摘要与 DOI 提取
   enrich.py              完整摘要翻译、一句话介绍、模型多标签分类与数值检查
   storage.py             数据库、原文哈希、机器处理版本、人工覆盖、JSON 导出
   query.py               有效元数据查询索引、分页、主题与精选标签组合筛选
@@ -135,6 +137,17 @@ PY
 ## 采集适配器与后续扩展
 
 当前 ICLR / ICML / ECCV 使用完整 Miniconf 分页，CVPR 使用 `cvpr-listings` 将精选名单与 CVF 全部论文集合并，NeurIPS 使用 `neurips-full` 对账公开下载与论文索引。配置中的 `scope: accepted` 表示全量录用范围；`distinctions_enabled: false` 控制 NeurIPS 本轮不展示精选标签。轨道由 `source_group` / `extra_groups` 明确允许，缺失轨道标记 `unverified`。
+
+RSS 使用 `rss-proceedings` 适配器，将 [官方接收名单](https://roboticsconference.org/2026/program/papers/)与 [RSS XXII 论文集](https://www.roboticsproceedings.org/rss22/)逐篇对账。详情页的 citation 元数据提供完整作者，HTML 提供完整摘要、DOI 与 HTTPS PDF 链接；接收名单的隐藏作者列表避免重复读取。身份使用稳定的 proceedings URL，保留独立 program ID、session 和来源证据，不假设两站编号相同。标题冲突、缺失摘要、DOI 冲突或两份索引不一致时拒绝更新并保留原库；已有快照支持离线重放。官方三项获奖结果独立配置、核验与展示，不把 finalist 当作获奖论文。
+
+```bash
+./scripts/atlas.sh sync --conference RSS2026
+./scripts/atlas.sh sync --conference RSS2026 --offline
+./scripts/atlas.sh enrich --conference RSS2026
+./scripts/atlas.sh pdf --conference RSS2026 --limit 1
+```
+
+RSS 接入的隔离验证、旧数据保持与交付记录见 `docs/rss2026-*.json`；接入前 SQLite 和配置备份保存在 `data/backups/rss2026-before-integration/`。
 
 新增会议需要核验官方 source group、文件名、分页、录用判断、轨道与论文身份；必要时新增适配器。标题里的 “oral / spotlight” 不构成精选证据。分页不完整、摘要缺失、官方身份冲突或异常缩水会使刷新失败并保留之前数据；不能把网络验证页面当作空名单提交。采集使用限速并发，`ATLAS_FETCH_WORKERS` 默认 6，可调整；详情页短期缓存与按内容哈希归档使补齐过程可续跑，`sync --offline` 只读取已有官方快照。
 
@@ -196,6 +209,8 @@ ECCV 的 Zero-shot Depth from Defocus 官方摘要索引误包含首页图注与
 
 ### 主题页交叉标签筛选
 
+会议总列表 `/{conference}/` 也直接展示“研究主题标签（多选）”，无需先进入左侧主题页；多选按 AND 取交集，选择随 URL 保存，清除标签保留搜索、级别和轨道条件。论文行的主题标签可点击进入对应会议的主题页。RSS 的 210 篇论文均已分类，当前覆盖 27 个有效研究主题；“精选标签未启用”仅指会议精选级别，不影响研究主题标签。
+
 跨会议 `/topics/{slug}/` 和会议内 `/{conference}/{slug}/` 均支持标签多选。页面主题是固定条件；额外标签取交集（AND），例如机器人页选择“多模态 VLM”和“优化与训练”，只显示同时属于这三个主题的论文。“仅机器人与具身智能”只匹配标签集合恰好为 `robotics` 的论文，与其它标签互斥；切换时自动清除冲突选择。没有勾选时显示该主题下全部论文。
 
 标签数量统计分页前的当前主题范围，会议、关键词、级别、轨道和校对条件均参与计数，额外标签选择不改变这些基础交叉数量。各标签数量可能重叠；列表总数显示当前多选交集的实际篇数。数量为零的单一主题项仍显示，已选择的其它标签即使变为零也保留，便于取消。清除标签选择保留搜索和级别等条件，筛选变化会回到第一页。
@@ -210,7 +225,9 @@ API 使用 `/api/papers?category=robotics&tag=multimodal&tag=optimization`；独
 
 API 兼容单值 `tier=oral`，并支持 `tier=oral&tier=spotlight`。`tier=poster` 匹配未确认精选标签的原四会论文；`tier=unlabeled` 匹配未启用精选标签的会议。`tier=award` 匹配获奖论文。标签数量可能重叠，总数始终按唯一论文统计。
 
-五个会议共 **27,794 篇已全部完成中文处理**，正式服务为 `http://127.0.0.1:18766`。扩容交付与用量记录在 `docs/full-coverage-delivery.json`，完整验收在 `docs/full-coverage-acceptance.json`。实施前 SQLite 与代码备份位于 `.runtime/full-coverage/`，原数据目录完整保留在 `.runtime/full-coverage/data-before-switch/`，可在停止服务后恢复作回滚。临时模型代理已停止，其凭证配置已删除。
+2026-10-11 扩容时，五个会议共 **27,794 篇已全部完成中文处理**，正式服务为 `http://127.0.0.1:18766`。扩容交付与用量记录在 `docs/full-coverage-delivery.json`，完整验收在 `docs/full-coverage-acceptance.json`。实施前 SQLite 与代码备份位于 `.runtime/full-coverage/`，原数据目录完整保留在 `.runtime/full-coverage/data-before-switch/`，可在停止服务后恢复作回滚。临时模型代理已停止，其凭证配置已删除。
+
+2026-10-15 已接入 RSS2026：210 篇全部完成中文标题、完整摘要翻译、一句话介绍和分类；当前六会合计 **28,004 篇**。RSS 专项交付与验收见 `docs/rss2026-delivery.json`、`docs/rss2026-browser-checks.json` 和 `docs/rss2026-quality-checks.json`。
 
 ## Git 与 GitHub 管理
 
@@ -221,14 +238,17 @@ API 兼容单值 `tier=oral`，并支持 `tier=oral&tier=spotlight`。`tier=post
 | `atlas/`、`scripts/`、`tests/` | 追踪 | 实现、操作入口与回归测试 |
 | `config/`、`requirements*.txt`、`requirements.lock` | 追踪 | 采集规则、人工原文修复、分类体系与依赖版本 |
 | `frontend/`，含字体、KaTeX 与许可证 | 追踪 | 无构建步骤，克隆后需要这些运行资源 |
-| `README.md`、`docs/`，含验收报告和截图 | 追踪 | 当前交付依据；新增报告和截图提交前检查是否含敏感内容 |
+| `README.md`、`docs/` 下的人工维护文档、公式来源证据与原始设计参考图 | 追踪 | 保存说明、公式修复依据与设计输入 |
+| `docs/*.json`（除 `math-macro-sources.json`）、`docs/screenshots/*`（除 `reference.png`） | 忽略 | 验收、交付和性能报告及浏览器截图属于运行生成产物，保留在本地和数据备份中 |
 | `data/web_sources/` 下现有三个奖项证据 JSON | 明确白名单追踪 | 文件很小，保存采集器依赖的官方奖项事实；新增文件需单独评估并更新白名单 |
 | SQLite、`data/raw/`、`data/papers/`、`data/translations/`、`data/reports/`、两个完整 JSON 导出 | 忽略 | 持续变化的研究数据，体积大、历史膨胀快 |
 | `data/pdf/`、`data/backups/`、`data/locks/` | 忽略 | 下载文件、数据备份与进程状态 |
 | `.venv/`、`.runtime/`、`probe/`、缓存、日志 | 忽略 | 本机环境、临时探索与运行产物 |
 | `.env*`、认证文件和私钥 | 忽略 | 凭证只保留在环境或本机；不含秘密的 `.env.example` 可提交 |
 
-GitHub 远程只保存上述追踪文件，不包含当前论文库、机器翻译结果、人工校对历史或完整离线采集快照。克隆后可安装依赖并在线执行 `sync`；恢复现有完整论文库仍需要单独的数据副本。`sync --offline` 需要 `data/raw/`，不会仅凭源码仓库成功。数据保存方法见“存储与复现”；本次 Git 配置没有新增数据备份任务。
+验收报告和页面截图仍写入上述 `docs/` 路径，可运行对应 `scripts/check_*.py` 检查脚本重新生成；交付报告和完整离线证据随本地数据另行保存。已有追踪的生成文件已取消追踪，本地文件不删除，历史提交中的版本仍可查询。
+
+GitHub 远程只保存上述追踪文件，不包含当前论文库、机器翻译结果、人工校对历史、完整离线采集快照或生成的验收产物。克隆后可安装依赖并在线执行 `sync`；恢复现有完整论文库仍需要单独的数据副本。`sync --offline` 需要 `data/raw/`，不会仅凭源码仓库成功。数据保存方法见“存储与复现”；本次 Git 配置没有新增数据备份任务。
 
 现有 `catalog.json` 和 `archive.json` 各约 186 MB，超过 GitHub 普通 Git 的 100 MiB 单文件限制。当前不启用 Git LFS；如以后需要发布数据集，可考虑独立的数据存储或版本化发布附件，避免日常运行数据进入源码历史。参见 [GitHub 大文件说明](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)。
 

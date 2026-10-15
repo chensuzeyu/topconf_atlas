@@ -225,6 +225,8 @@ def numeric_tokens(text):
     and ignore Excel-style control-character escapes in official abstracts.
     """
     text = re.sub(r'_x[0-9a-fA-F]{4}_', ' ', text)
+    # "end-2-end" denotes end-to-end, rather than an experimental value of two.
+    text = re.sub(r'\bend-?2-?end\b', 'end to end', text, flags=re.I)
     text = re.sub(r'(?<!\d)[234]-?D', '', text, flags=re.I)
     text = re.sub(r'\(cid:\d+\)', ' ', text)
     def chinese_number(match):
@@ -266,7 +268,7 @@ def numeric_tokens(text):
 @locked('enrich')
 def recheck_quality(conference=None):
     """Re-run current validators on saved machine output without requesting a model."""
-    report = {'checked_at':now(), 'checked':0, 'flagged':[], 'errors':[], 'validator':'zh-numeric-v2'}
+    report = {'checked_at':now(), 'checked':0, 'flagged':[], 'errors':[], 'validator':'zh-numeric-v3'}
     with connect() as db:
         for p in all_papers(db, conference):
             key = enrichment_hash(p)

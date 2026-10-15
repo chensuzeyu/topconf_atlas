@@ -75,8 +75,8 @@ def list_papers(conference: str | None = None, category: str | None = None, tier
     valid_tags = {c['slug'] for c in taxonomy()}
     if tags - valid_tags:
         raise HTTPException(422, 'Unknown intersection tag')
-    if (tags or exclusive) and not category:
-        raise HTTPException(422, 'Tag filtering requires a topic page')
+    if exclusive and not category:
+        raise HTTPException(422, 'Exclusive filtering requires a topic page')
     if category in tags or (exclusive and tags):
         raise HTTPException(422, 'Exclusive current topic cannot be combined with other tags')
     if set(tier) - TIERS:

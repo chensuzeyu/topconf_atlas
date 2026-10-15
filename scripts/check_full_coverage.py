@@ -34,9 +34,10 @@ def main():
                 assert page.locator('input[name="distinction"]').count()==0
                 assert page.locator('#tier-filter option[value="oral"]').count()==0
                 assert page.locator('.badge.oral,.badge.spotlight,.badge.highlight,.badge.poster').count()==0
-                page.locator('#track-filter').select_option('unverified');count(conf['tracks']['unverified'])
-                page.screenshot(path=str(ROOT/'docs/screenshots/neurips-unverified.png'))
-        checks.append('five full conference lists; ordinary filters; NeurIPS distinctions disabled and unknown tracks explicit')
+                if 'unverified' in conf['tracks']:
+                    page.locator('#track-filter').select_option('unverified');count(conf['tracks']['unverified'])
+                page.screenshot(path=str(ROOT/'docs/screenshots'/('no-distinctions-'+conf['id']+'.png')))
+        checks.append('all configured conference lists; ordinary filters; disabled distinctions and optional unknown tracks')
         visit('/ICML2026/')
         page.locator('input[name="distinction"][value="oral"]').check()
         count(total('conference=ICML2026&tier=oral'))

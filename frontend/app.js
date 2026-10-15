@@ -1,7 +1,7 @@
 import {renderRichText, renderPaperText} from './math.mjs';
 const $ = (q, root = document) => root.querySelector(q);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const tierNames = {oral:'Oral',spotlight:'Spotlight',highlight:'Highlight',award:'获奖',poster:'普通论文',unlabeled:'标签未启用'};
+const tierNames = {oral:'Oral',spotlight:'Spotlight',highlight:'Highlight',award:'获奖',poster:'普通论文',unlabeled:'精选标签未启用'};
 const trackNames = {main:'主研究轨道',position:'Position Track',evaluations_datasets:'Evaluations & Datasets',unverified:'轨道待核验'};
 const main = $('#content'), sidebar = $('#sidebar');
 let meta, currentPaper, revision = 0, searchTimer, pollTimer, metaUpdatedAt = 0;
@@ -50,19 +50,19 @@ function home() {
   title('顶会论文库'); side(null,null); refreshNav(null);
   main.innerHTML = `<h1>▤ 顶会论文库</h1><p class="home-lead">按会议与研究主题阅读 2026 年的全部录用论文。列表用一句话介绍工作，点进论文即可阅读完整中文摘要。</p>` +
     `<div class="conference-grid">${meta.conferences.map(c => `<a data-nav href="/${c.id}/" class="conference-card"><strong>${c.icon} ${c.id}</strong><span class="big-number">${c.count}<span style="font-size:12px;color:var(--muted)"> 篇</span></span><small>${Object.entries(c.tiers).map(([t,n]) => `${n} ${tierNames[t]}`).join(' · ')}</small><small>中文摘要 ${c.translated} / ${c.count}</small></a>`).join('')}</div>` +
-    `<div class="notice">覆盖五会官方录用论文，包含普通论文；Oral、Spotlight、Highlight 与获奖信息可选筛选。当前 ${meta.total.toLocaleString()} 篇，中文摘要 ${meta.translated.toLocaleString()} 篇；数据核验于 ${date(meta.snapshot_date)}。</div>` +
+    `<div class="notice">覆盖 ${meta.conferences.length} 个会议的官方录用论文，包含普通论文；Oral、Spotlight、Highlight 与获奖信息可选筛选。当前 ${meta.total.toLocaleString()} 篇，中文摘要 ${meta.translated.toLocaleString()} 篇；数据核验于 ${date(meta.snapshot_date)}。</div>` +
     `<h2>按研究主题浏览</h2><div class="topic-grid">${[...new Set(meta.categories.map(c => c.group))].map(group => `<section class="topic-group"><h3>${escape(group)}</h3>${meta.categories.filter(c => c.group === group && c.count).map(c => `<a data-nav class="topic-chip" href="/topics/${c.slug}/">${c.icon} ${escape(c.name)} <span style="color:var(--muted)">${c.count}</span></a>`).join('')}</section>`).join('')}</div>` +
     `<p class="detail-caption">ICLR 的精选标签目前仅核验到 Oral；普通论文已纳入完整名单。ICML 的 Position Track 单列，会议论文列表可筛选仅主研究轨道。</p>`;
 }
 
 function topicFilters(t, facets, params) {
-  if (!t || !facets) return '';
+  if (!facets) return '';
   const tags = new Set(params.getAll('tag')), exclusive = ['true','1'].includes(params.get('exclusive'));
   const chip = (id, name, value, text, count, checked) => `<label class="tag-filter ${checked ? 'selected' : ''}"><input id="${id}" type="checkbox" name="${name}" value="${escape(value)}" ${checked ? 'checked' : ''}><span>${escape(text)}</span><span class="tag-count">${count}</span></label>`;
-  return `<fieldset class="topic-filters"><legend>交叉标签筛选</legend><p class="tag-help">当前主题始终包含在筛选中。多选其它标签时，论文须同时包含所有选中标签；“仅当前主题”与其它标签互斥。</p><div class="tag-filter-options">` +
-    chip('topic-exclusive','exclusive','true',`${t.icon} 仅${t.name}`,facets.exclusive_count,exclusive) +
+  return `<fieldset class="topic-filters"><legend>${t ? '交叉标签筛选' : '研究主题标签（多选）'}</legend><p class="tag-help">${t ? '当前主题始终包含在筛选中。多选其它标签时，论文须同时包含所有选中标签；“仅当前主题”与其它标签互斥。' : '按研究主题分类与筛选，多选时论文须同时包含所有选中标签；不选时显示全部论文。'}</p><div class="tag-filter-options">` +
+    (t ? chip('topic-exclusive','exclusive','true',`${t.icon} 仅${t.name}`,facets.exclusive_count,exclusive) : '') +
     facets.tags.map(f => chip(`tag-${f.slug}`,'tag',f.slug,`${f.icon} ${f.name}`,f.count,tags.has(f.slug))).join('') +
-    `</div><div class="tag-filter-footer"><span>数字为当前主题内与各标签交叉的篇数（随会议、搜索和级别等筛选更新，多标签计数可重叠）。未选标签时显示全部 ${facets.total} 篇。</span><button type="button" class="button" id="clear-tags">清除标签选择</button></div></fieldset>`;
+    `</div><div class="tag-filter-footer"><span>数字为${t ? '当前主题内与各标签交叉' : '当前范围内各标签'}的篇数（随会议、搜索和级别等筛选更新，多标签计数可重叠）。未选标签时显示全部 ${facets.total} 篇。</span><button type="button" class="button" id="clear-tags">清除标签选择</button></div></fieldset>`;
 }
 
 async function listing(r, version) {
@@ -84,12 +84,13 @@ async function listing(r, version) {
     `<p class="intro"><strong>${c ? c.icon+' '+c.id : '全部会议'}</strong> · ${result.total} 篇论文</p>` +
     (cross ? `<p class="cross-links">同领域跨会议浏览：${cross}</p>` : '') +
     (c?.id === 'NeurIPS2026' ? '<div class="notice">覆盖官方论文名单，本轮暂不展示精选标签；轨道资料尚未完整公开的条目标为“轨道待核验”。</div>' : '') +
+    (c?.id === 'RSS2026' ? '<div class="notice">研究主题可在下方多选筛选，也可从左侧进入主题分类。会议报告安排不作为精选 Oral 标签；获奖论文可独立筛选。</div>' : '') +
     (c?.id === 'ICLR2026' ? '<div class="notice">已收录全部主研究轨道论文。当前官方索引提供 Oral / Poster，独立 Spotlight 名单仍待核验。</div>' : '') +
     `<form class="toolbar" id="filters"><label class="sr-only" for="local-q">在当前列表搜索</label><input id="local-q" name="q" placeholder="在当前列表搜索…" value="${escape(r.params.get('q') || '')}">` +
-    `<label class="sr-only" for="tier-filter">论文筛选</label><select id="tier-filter" name="tier"><option value="">全部论文</option>${(c?.distinctions_enabled === false ? ['unlabeled'] : ['oral','spotlight','highlight','poster','award']).map(v => `<option value="${v}" ${r.params.getAll('tier').includes(v) ? 'selected' : ''}>${tierNames[v]}</option>`).join('')}</select>` +
+    `<label class="sr-only" for="tier-filter">论文筛选</label><select id="tier-filter" name="tier"><option value="">全部论文</option>${(c?.distinctions_enabled === false ? ['unlabeled','award'] : ['oral','spotlight','highlight','poster','award']).map(v => `<option value="${v}" ${r.params.getAll('tier').includes(v) ? 'selected' : ''}>${tierNames[v]}</option>`).join('')}</select>` +
     `<label class="sr-only" for="track-filter">论文轨道</label><select id="track-filter" name="track"><option value="">全部轨道</option>${Object.entries(c?.tracks || trackNames).map(([v,name]) => `<option value="${v}" ${r.params.get('track') === v ? 'selected' : ''}>${escape(name)}</option>`).join('')}</select>` +
     `<label class="sr-only" for="sort-filter">排序</label><select id="sort-filter" name="sort"><option value="title">标题顺序</option><option value="tier" ${r.params.get('sort') === 'tier' ? 'selected' : ''}>精选优先</option></select><span class="result-count" role="status">${result.total ? (result.page-1)*40+1 : 0}–${Math.min(result.page*40,result.total)} / ${result.total}</span>${c?.distinctions_enabled === false ? '' : `<fieldset class="distinction-filters"><legend>精选标签（多选取并集）</legend>${['oral','spotlight','highlight'].map(v=>`<label><input type="checkbox" name="distinction" value="${v}" ${r.params.getAll('tier').includes(v)?'checked':''}>${tierNames[v]}</label>`).join('')}</fieldset>`}${topicFilters(t,result.topic_facets,r.params)}</form>` +
-    `<div class="paper-list">${result.items.length ? result.items.map(p => `<article class="paper-row" data-paper-id="${p.id}"><a class="paper-title" data-nav href="${paperPath(p)}">${escape(p.title)}</a><div class="row-meta">${badge(p)}${!c ? `<span>${p.conference}</span>` : ''}<span>${p.categories.map(s => escape(label(s)?.name || s)).join(' · ')}</span>${p.quality_flags?.length ? '<span title="翻译中的数字需要复核">待校对</span>' : ''}</div><p class="paper-summary">${escape(p.summary_zh || '中文介绍处理中，可点击标题阅读原始英文摘要。')}</p></article>`).join('') : '<div class="empty"><h2>没有匹配的论文</h2><p>试试其他关键词，或清除级别与轨道筛选。</p><button class="button" data-action="clear-filters">清除筛选</button></div>'}</div>` +
+    `<div class="paper-list">${result.items.length ? result.items.map(p => `<article class="paper-row" data-paper-id="${p.id}"><a class="paper-title" data-nav href="${paperPath(p)}">${escape(p.title)}</a><div class="row-meta">${badge(p)}${!c ? `<span>${p.conference}</span>` : ''}<span>${p.categories.map(s => `<a data-nav href="/${p.conference}/${s}/">${escape(label(s)?.name || s)}</a>`).join(' · ')}</span>${p.quality_flags?.length ? '<span title="翻译中的数字需要复核">待校对</span>' : ''}</div><p class="paper-summary">${escape(p.summary_zh || '中文介绍处理中，可点击标题阅读原始英文摘要。')}</p></article>`).join('') : '<div class="empty"><h2>没有匹配的论文</h2><p>试试其他关键词，或清除级别与轨道筛选。</p><button class="button" data-action="clear-filters">清除筛选</button></div>'}</div>` +
     (result.pages > 1 ? `<div class="pagination"><button class="button" data-page="${result.page-1}" ${result.page <= 1 ? 'disabled' : ''}>← 上一页</button><span>第 ${result.page} / ${result.pages} 页</span><button class="button" data-page="${result.page+1}" ${result.page >= result.pages ? 'disabled' : ''}>下一页 →</button></div>` : '');
   const filter = $('#filters');
   filter.addEventListener('submit', e => {e.preventDefault();applyFilters();});
@@ -97,7 +98,7 @@ async function listing(r, version) {
     if(e.target.id === 'tier-filter') filter.querySelectorAll('input[name="distinction"]').forEach(input => input.checked = false);
     if(e.target.name === 'distinction' && !filter.querySelector('input[name="distinction"]:checked')) $('#tier-filter').value = '';
     if(e.target.checked && e.target.name === 'exclusive') filter.querySelectorAll('input[name="tag"]').forEach(input => input.checked = false);
-    if(e.target.checked && e.target.name === 'tag') $('#topic-exclusive').checked = false;
+    if(e.target.checked && e.target.name === 'tag' && $('#topic-exclusive')) $('#topic-exclusive').checked = false;
     applyFilters();
   });
   $('#clear-tags')?.addEventListener('click', () => {
@@ -128,7 +129,7 @@ async function detail(id, version) {
   side(c.id,t?.slug,[p]);refreshNav(c.id);
   main.innerHTML = `<div class="breadcrumbs"><a data-nav href="/">首页</a> / <a data-nav href="/${c.id}/">${c.id}</a> / ${t ? `<a data-nav href="/${c.id}/${t.slug}/">${escape(t.name)}</a> / ` : ''}论文摘要</div>` +
     `<h1 class="detail-title">${escape(p.title)}</h1><p class="title-zh">${escape(p.title_zh)}</p><div class="row-meta">${badge(p)}<span>${p.review_status === 'reviewed' ? '人工已校对' : '机器翻译，未人工校对'}</span></div>` +
-    `<p class="detail-authors">${p.authors.map(a => escape(a.fullname)).join(' · ')}</p><div>${p.categories.map(slug => {const t=label(slug);return `<a class="topic-chip" data-nav href="/${c.id}/${slug}/">${t?.icon || ''} ${escape(t?.name || slug)}</a>`;}).join('')}</div>` +
+    `${p.session ? `<p class="detail-caption">官方 Session：${escape(p.session)}${p.doi ? ' · DOI：'+escape(p.doi) : ''}</p>` : ''}<p class="detail-authors">${p.authors.map(a => escape(a.fullname)).join(' · ')}</p><div>${p.categories.map(slug => {const t=label(slug);return `<a class="topic-chip" data-nav href="/${c.id}/${slug}/">${t?.icon || ''} ${escape(t?.name || slug)}</a>`;}).join('')}</div>` +
     `<div class="detail-actions">${external(p.paper_url,'论文原文')}${external(p.pdf_url,'PDF')}${p.pdf_cached ? `<a class="button" href="/api/pdf/${p.id}" target="_blank" rel="noopener">本地 PDF</a>` : p.pdf_url ? '<button class="button" data-action="cache-pdf">保存 PDF 到本地</button>' : ''}${external(p.official_url,'官方页面')}${external(p.code_url,'代码')}<button class="button" data-action="copy-abstract">复制中文摘要</button><button class="button" data-action="edit">校对摘要与分类</button></div>` +
     (p.quality_flags?.length ? `<div class="notice">${p.quality_flags.includes('source_changed_after_review') ? '原始摘要在人工校对后发生变化，已保留人工译文并标记需要重新校对。' : '中文译文中部分数值格式与原文不一致，已标记待校对；可切换英文摘要核对。'}</div>` : '') +
     `<section><div class="abstract-header"><h2>摘要</h2><div class="abstract-tabs" role="tablist" aria-label="摘要语言"><button class="active" role="tab" aria-selected="true" data-lang="zh">中文译文</button><button role="tab" aria-selected="false" data-lang="en">英文原文</button></div></div><div class="abstract-text" id="abstract-body">${escape(p.abstract_zh || '中文翻译处理中。请切换英文原文阅读完整摘要。')}</div><p class="detail-caption">${p.translation_meta ? `摘要完整翻译 · ${escape(p.translation_meta.model)} · ${date(p.translation_meta.generated_at)}` : '保留完整英文原始摘要'}${p.reviewed_at ? ' · 人工校对于 '+date(p.reviewed_at) : ''}</p></section><div id="editor-slot"></div>` +

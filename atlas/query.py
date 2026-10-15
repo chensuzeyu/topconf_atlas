@@ -33,10 +33,11 @@ def list_indexed(conference=None, category=None, tiers=(), track=None, q='', pag
     facets = None
     with connect() as db:
         refresh_query_index(db)
-        if category:
+        if category or conference or tags:
             base = db.execute('SELECT count(*) FROM paper_query p WHERE '+scope,args).fetchone()[0]
-            exclusive_count = db.execute('SELECT count(*) FROM paper_query p WHERE '+scope+
+            exclusive_count = (db.execute('SELECT count(*) FROM paper_query p WHERE '+scope+
                 ' AND NOT EXISTS(SELECT 1 FROM paper_topics t WHERE t.paper_id=p.id AND t.slug!=?)',args+[category]).fetchone()[0]
+                if category else None)
             counts = dict(db.execute('WITH scope AS(SELECT p.id FROM paper_query p WHERE '+scope+') '
                 'SELECT t.slug,count(*) FROM paper_topics t JOIN scope s ON s.id=t.paper_id GROUP BY t.slug',args).fetchall())
             facets = {'total':base,'exclusive_count':exclusive_count,

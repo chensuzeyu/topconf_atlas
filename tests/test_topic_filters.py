@@ -56,12 +56,28 @@ class TopicFilterTests(unittest.TestCase):
         self.assertEqual(result['topic_facets']['exclusive_count'], 0)
 
     def test_invalid_combination_and_duplicates(self):
-        for query in ('tag=llm_agent', 'exclusive=true', 'category=robotics&tag=unknown',
+        for query in ('exclusive=true', 'tag=unknown', 'category=robotics&tag=unknown',
                       'category=robotics&tag=robotics',
                       'category=robotics&exclusive=true&tag=llm_agent'):
             self.assertEqual(self.client.get('/api/papers?' + query).status_code, 422, query)
         result = self.client.get('/api/papers?category=robotics&tag=llm_agent&tag=llm_agent').json()
         self.assertEqual(result['total'], 2)
+
+    def test_conference_topic_filters_without_fixed_category(self):
+        result = self.client.get('/api/papers?conference=CVPR2026&page_size=1').json()
+        self.assertEqual(result['total'], 5)
+        facets = result['topic_facets']
+        self.assertIsNone(facets['exclusive_count'])
+        self.assertEqual({t['slug']:t['count'] for t in facets['tags']},
+                         {'robotics':4, 'llm_agent':3, 'llm_reasoning':2})
+        selected = self.client.get('/api/papers?conference=CVPR2026&tag=robotics&tag=llm_agent&tag=llm_agent').json()
+        self.assertEqual({p['id'] for p in selected['items']}, {'agent', 'both'})
+        self.assertEqual(selected['topic_facets'], facets)
+        selected = self.client.get('/api/papers?conference=CVPR2026&tag=llm_agent&tier=highlight').json()
+        self.assertEqual(selected['total'], 0)
+        self.assertEqual({t['slug']:t['count'] for t in selected['topic_facets']['tags']},
+                         {'robotics':1, 'llm_reasoning':1, 'llm_agent':0})
+        self.assertEqual(self.client.get('/api/papers?tag=llm_agent').json()['total'], 3)
 
 
 if __name__ == '__main__':
